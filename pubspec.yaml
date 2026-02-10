@@ -1,8 +1,9 @@
 name: flutter_smart_repository
 description: "A flexible, offline-first, multi-platform data repository designed for Flutter applications."
 version: 0.0.1
-homepage: https://github.com/BiaoMoussa/flutter_smart_repository.git
-repository: https://github.com/BiaoMoussa/flutter_smart_repository.git
+homepage: https://github.com/BiaoMoussa/flutter_smart_repository
+repository: https://github.com/BiaoMoussa/flutter_smart_repository
+issue_tracker: https://github.com/BiaoMoussa/flutter_smart_repository/issues
 
 environment:
   sdk: ^3.10.4
