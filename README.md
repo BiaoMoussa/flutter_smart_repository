@@ -28,10 +28,14 @@ In all these cases, a single API (the repository) handles read/write while the p
 
 ## Installation
 
+Add to your `pubspec.yaml`:
+
 ```yaml
 dependencies:
-  flutter_smart_repository: ^0.0.1
+  flutter_smart_repository: ^0.0.2
 ```
+
+Then run `flutter pub get`. Package on pub.dev: [flutter_smart_repository](https://pub.dev/packages/flutter_smart_repository).
 
 ## Getting started
 
@@ -122,7 +126,13 @@ await repository.delete('1');
 
 ## Documentation
 
-For architecture, sync flow, conflict resolution, and roadmap, see [FLUTTER_SMART_REPOSITORY_README.md](FUTTER_SMART_REPOSITORY_README.md).
+- **Quick start**: this README.
+- **Architecture, sync flow, conflict resolution, roadmap**: [FLUTTER_SMART_REPOSITORY_README.md](FLUTTER_SMART_REPOSITORY_README.md).
+- **API docs**: run `dart doc` in the package or see the [repository](https://github.com/BiaoMoussa/flutter_smart_repository).
+
+## Contributing
+
+Contributions are welcome. Please open an [issue](https://github.com/BiaoMoussa/flutter_smart_repository/issues) or a [pull request](https://github.com/BiaoMoussa/flutter_smart_repository/pulls).
 
 ## License
 

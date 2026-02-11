@@ -10,6 +10,10 @@ class ConnectivityServiceImpl implements ConnectivityService {
 
   ConnectivityServiceImpl(this._connectivity);
 
+  /// Crée une instance utilisant le plugin connectivity_plus (réseau du téléphone).
+  factory ConnectivityServiceImpl.defaultInstance() =>
+      ConnectivityServiceImpl(Connectivity());
+
   @override
   Future<bool> get isConnected async {
     final List<ConnectivityResult> result = await _connectivity

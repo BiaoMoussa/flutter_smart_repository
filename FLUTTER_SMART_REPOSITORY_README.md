@@ -7,7 +7,7 @@ Flutter applications.
 
 ## 📌 Overview
 
-`smart_repository_flutter` is a highly extensible repository layer that
+`flutter_smart_repository` is a highly extensible repository layer that
 simplifies data management in Flutter applications by providing:
 
 -   Offline-first architecture
@@ -146,13 +146,12 @@ automatically synchronized when connectivity is restored.
 
 The package follows Clean Architecture principles.
 
-    smart_repository_flutter
+    flutter_smart_repository
     │
     ├── core
     │   ├── sync_engine
     │   ├── connectivity
-    │   ├── retry_policy
-    │   └── conflict_resolution
+    │   └── encryption
     │
     ├── domain
     │   ├── repository
@@ -162,12 +161,8 @@ The package follows Clean Architecture principles.
     │
     ├── data
     │   ├── local
-    │   ├── remote
     │   ├── queue
-    │   └── mappers
-    │
-    ├── presentation_helpers
-    │   └── optional integrations
+    │   └── conflict_resolution
     │
     └── utils
 
@@ -177,26 +172,30 @@ The package follows Clean Architecture principles.
 
 ### Define Entity
 
-``` dart
-class User {
+```dart
+class User implements Identifiable {
+  @override
   final String id;
   final String name;
+  User(this.id, this.name);
 }
 ```
 
 ### Create Repository
 
-``` dart
+```dart
 final repository = SmartRepository<User>(
   remoteSource: userRemoteSource,
   localSource: userLocalSource,
+  connectivity: connectivity,
+  offlineQueue: queue,
   fetchPolicy: FetchPolicy.cacheFirst,
 );
 ```
 
 ### Fetch Data
 
-``` dart
+```dart
 final users = await repository.getAll();
 ```
 
@@ -229,30 +228,28 @@ final users = await repository.getAll();
 
 ## 🛠 Development Roadmap
 
-### Phase 1 --- Core Foundation
+### Phase 1 — Core Foundation ✅
 
 -   Repository abstraction
 -   Fetch policies
 -   Basic local/remote support
 
-### Phase 2 --- Synchronization Engine
+### Phase 2 — Synchronization Engine ✅
 
 -   Offline queue
--   Retry strategy
 -   Connectivity monitoring
+-   Sync events
 
-### Phase 3 --- Conflict Resolution
+### Phase 3 — Conflict Resolution ✅
 
--   Built-in resolvers
+-   Built-in resolvers (e.g. TimestampConflictResolver)
 -   Custom resolver support
 
-### Phase 4 --- Storage Adapters
+### Phase 4 — Storage Adapters ✅
 
--   Hive adapter
--   Isar adapter
--   SQLite adapter
+-   Hive adapter (local + queue)
 
-### Phase 5 --- Advanced Features
+### Phase 5 — Advanced Features ✅
 
 -   Encryption support
 -   Sync inspector
@@ -260,9 +257,9 @@ final users = await repository.getAll();
 
 ------------------------------------------------------------------------
 
-## 🤝 Contribution
+## 🤝 Contributing
 
-Contributions are welcome.
+Contributions are welcome. Please open an issue or a pull request on [GitHub](https://github.com/BiaoMoussa/flutter_smart_repository).
 
 ------------------------------------------------------------------------
 
