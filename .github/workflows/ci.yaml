@@ -1,0 +1,60 @@
+# ================================================
+# CI Workflow
+# ================================================
+name: CI
+
+# ================================================
+# "on" : événement qui déclenche le workflow
+# Ici on déclenche le workflow lorsqu'on fait un push sur la branche master
+# ================================================
+on:
+  push:
+    branches: [master] # la branche sur laquel
+  pull_request: 
+    branches: [master] # la branche sur laquel on veut déclencher le workflow
+
+# ================================================
+# Jobs : étapes du workflow
+# Chaque job tourne en parallèle par défaut (sauf si "needs:" le lie à un autre)
+# ================================================
+jobs: 
+  # Indentifiant du job (utilisé dans les logs et les needs:)
+  build-and_test:
+    # Nom lisible dans l'interface GitHub 
+    name: Build and Test
+
+    # Machine sur laquelle le job tourne (runner)
+    # ubuntu-latest: dernière version de Ubuntu LTS fournie par GitHub
+    runs-on: ubuntu-latest
+
+    # Liste des étapes du job; exécutées dans l'ordre, une après l'autre
+    steps:
+      # Étape 1 : récupérer le code source du dépôt
+      # "uses" = exécuter une action (code réutilisable, souvent depuis GitHub)
+      # actions/checkout = action officielle pour cloner le repo à la version du commit déclencheur
+      - name: Checkout repository
+        uses: actions/checkout@v4
+    
+      # --- Étape 2 : installer Flutter sur le runner ---
+      # subosito/flutter-action installe le SDK Flutter et met en cache pour accélérer les runs suivants
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # Version de Flutter (doit correspondre à ton environnement, ex. pubspec)
+          flutter-version: "3.38.5"
+          # Mettre en cache le SDK et pub-cache pour réduire le temps des prochains workflows
+          cache: true
+      
+      # --- Étape 3 : exécuter les tests ---
+      - name: Run tests
+        run: flutter test
+
+      # --- Étape 4 : analyse statique du code (linter, règles dart analyze) ---
+      # Échoue si analysis_options.yaml ou les lints ne sont pas respectés
+      - name: Analyze
+        run: dart analyze
+
+      # --- Étape 5 : lancer les tests définis dans test/ ---
+      # Échoue si un test échoue (assert, exception non gérée, etc.)
+      - name: Run tests
+        run: flutter test
